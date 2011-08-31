@@ -22,8 +22,8 @@
 set :ruby, `which ruby`.strip
 set :path, File.expand_path("../lib", __FILE__)
 
-job_type :harmonia, %{PASSWORD=:password :ruby -I:path -rharmonia -e "Harmonia.run"}
+job_type :harmonia, %{PASSWORD=:password TO=james@lazyatom.com :ruby -I:path -rharmonia -e "Harmonia.run"}
 
-every :monday, :at => "12:00pm" do
+every 1.minutes do
   harmonia "x"
 end

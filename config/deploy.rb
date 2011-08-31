@@ -12,3 +12,5 @@ require "whenever/capistrano"
 
 set :whenever_command, "bundle exec whenever"
 set :whenever_update_flags, "--update-crontab #{whenever_identifier} -s password=#{password}"
+
+after "deploy:update_code", "whenever:update_crontab"
