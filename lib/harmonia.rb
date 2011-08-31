@@ -18,13 +18,19 @@ Mail.defaults do
 end
 
 class Harmonia
-  def self.invoice_delegate
-    people = ["James A", "James M", "Tom", "Chris", "Jase"]
+  PEOPLE = ["James A", "James M", "Tom", "Chris", "Jase"]
 
-    selected_person = people[rand(people.length)]
+  def invoice_delegate
+    @invoice_delegate ||= PEOPLE[rand(PEOPLE.length)]
   end
 
-  def self.send_invoice_email(selected_person)
+  def weeknotes_delegate
+    remaining_candidates = PEOPLE - [invoice_delegate]
+    @weeknotes_delegate ||= remaining_candidates[rand(remaining_candidates.length)]
+  end
+
+  def send_invoice_email
+    selected_person = invoice_delegate
     mail = Mail.deliver do
         from '"Chaos Administrator" <chaos@gofreerange.com>'
           to ENV["TO"] || 'lets@gofreerange.com'
@@ -46,6 +52,7 @@ Chaos Administrator
   end
 
   def self.run
-    send_invoice_email(invoice_delegate)
+    instance = new
+    instance.send_invoice_email
   end
 end
