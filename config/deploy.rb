@@ -1,18 +1,14 @@
 require "tomafro/deploy"
 
+server "gofreerange.com", :app
+
 set :application, "harmonia"
 set :repository,  "git@github.com:freerange/harmonia.git"
 
-server "gofreerange.com", :app, :db
-
-set :whenever_command, "bundle exec whenever"
+set :current_path, deploy_to
+set :release_path, deploy_to
 
 require "whenever/capistrano"
 
-def current_path
-  deploy_to
-end
-
-def release_path
-  deploy_to
-end
+set :whenever_command, "bundle exec whenever"
+set :whenever_update_flags, "--update-crontab #{whenever_identifier} -s password=#{password}"
