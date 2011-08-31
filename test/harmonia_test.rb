@@ -1,6 +1,4 @@
 require "test_helper"
-require "test/unit"
-require "mocha"
 
 class HarmoniaTest < Test::Unit::TestCase
   def test_eventually_every_one_is_chosen_as_delegate

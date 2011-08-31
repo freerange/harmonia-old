@@ -19,10 +19,11 @@
 
 # Learn more: http://github.com/javan/whenever
 
-# every :monday, :at => "12:00pm" do
-#   command "harmonia"
-# end
+set :ruby, `which ruby`
+set :path, File.expand_path("../lib", __FILE__)
 
-every 1.minute do
-  command "harmonia"
+job_type :harmonia, %{PASSWORD=:password :ruby -I:path -rharmonia -e "Harmonia.run"}
+
+every :monday, :at => "12:00pm" do
+  harmonia "x"
 end
