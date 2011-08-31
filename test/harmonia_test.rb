@@ -1,6 +1,10 @@
 require "test_helper"
 
 class HarmoniaTest < Test::Unit::TestCase
+  def setup
+    Mail::TestMailer.deliveries.clear
+  end
+
   def test_eventually_every_one_is_chosen_as_invoice_delegate
     delegates = []
     100.times { delegates << Harmonia.new.invoice_delegate; delegates.uniq! }
@@ -28,7 +32,14 @@ class HarmoniaTest < Test::Unit::TestCase
 
     Harmonia.run
 
-    assert_equal 1, Mail::TestMailer.deliveries.length
-    assert_equal "James, it's your turn to do invoices.", Mail::TestMailer.deliveries.first.subject
+    assert Mail::TestMailer.deliveries.find { |m| m.subject == "James, it's your turn to do invoices." }
+  end
+
+  def test_sends_mail_to_weeknotes_delegate
+    Harmonia.any_instance.stubs(:weeknotes_delegate).returns "Tom"
+
+    Harmonia.run
+
+    assert Mail::TestMailer.deliveries.find { |m| m.subject == "Tom is writing the notes this week." }
   end
 end

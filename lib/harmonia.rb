@@ -51,8 +51,29 @@ Chaos Administrator
     end
   end
 
+  def send_weeknotes_email
+    selected_person = weeknotes_delegate
+    mail = Mail.deliver do
+        from '"Chaos Administrator" <chaos@gofreerange.com>'
+          to ENV["TO"] || 'lets@gofreerange.com'
+     subject "#{selected_person} is writing the notes this week."
+        body <<-EOS
+Greetings Free Range!
+
+It's me, the CHAOS ADMINISTRATOR. I'm here to keep bid'ness ticking over.
+
+#{selected_person}, you've been chosen to write the weeknotes. Start gathering as soon as you like; you'll be publishing them on Friday.
+
+All the best,
+
+Chaos Administrator
+    EOS
+    end
+  end
+
   def self.run
     instance = new
     instance.send_invoice_email
+    instance.send_weeknotes_email
   end
 end
