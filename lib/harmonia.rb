@@ -26,7 +26,7 @@ class Harmonia
   def self.send_invoice_email(selected_person)
     mail = Mail.deliver do
         from '"Chaos Administrator" <chaos@gofreerange.com>'
-          to 'lets@gofreerange.com'
+          to ENV["TO"] || 'lets@gofreerange.com'
      subject "#{selected_person}, it's your turn to do invoices."
         body <<-EOS
 Greetings Free Range!
@@ -48,5 +48,3 @@ Chaos Administrator
     send_invoice_email(invoice_delegate)
   end
 end
-
-Harmonia.run unless ENV["ENV"] == "test"
