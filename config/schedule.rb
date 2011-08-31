@@ -19,7 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :ruby, `which ruby`
+set :ruby, `which ruby`.strip
 set :path, File.expand_path("../lib", __FILE__)
 
 job_type :harmonia, %{PASSWORD=:password :ruby -I:path -rharmonia -e "Harmonia.run"}
