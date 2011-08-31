@@ -1,6 +1,6 @@
 require "tomafro/deploy"
 
-server "gofreerange.com", :app
+server "gofreerange.com", :app, :db
 
 set :application, "harmonia"
 set :repository,  "git@github.com:freerange/harmonia.git"
