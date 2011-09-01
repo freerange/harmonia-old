@@ -4,7 +4,9 @@ gem "mail"
 gem "whenever"
 gem "rake"
 
-gem "tomafro-deploy", :git => "git://github.com/tomafro/tomafro-deploy.git"
+group :development do
+  gem "tomafro-deploy", :git => "git://github.com/tomafro/tomafro-deploy.git"
+end
 
 group :test do
   gem "mocha"
