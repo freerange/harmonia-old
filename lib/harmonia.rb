@@ -29,6 +29,25 @@ class Harmonia
     @weeknotes_delegate ||= remaining_candidates[rand(remaining_candidates.length)]
   end
 
+  def overdue_invoices
+    config = YAML.load(File.open(File.expand_path("../../config/free_agent.yml", __FILE__)))
+    freerange = FreeAgent::Company.new(config[:domain], config[:username], config[:password])
+    @overdue_invoices ||= freerange.invoices.select { |i| i.status == "Overdue" }
+  end
+
+  def list_of_overdue_invoices
+    io = StringIO.new
+    overdue_invoices.each_with_index do |invoice, index|
+      io.puts "* '#{invoice.reference}' for £#{"%0.2f" % invoice.net_value} was due on #{invoice.due_on.to_date.to_s(:rfc822)} [#{index+1}]"
+    end
+    io.puts
+    overdue_invoices.each_with_index do |invoice, index|
+      io.puts "[#{index+1}] #{invoice.url}"
+    end
+    io.rewind
+    io.read
+  end
+
   def send_invoice_email
     selected_person = invoice_delegate
     mail = Mail.deliver do
@@ -43,6 +62,10 @@ It's me, the CHAOS ADMINISTRATOR. I'm here to keep bid'ness ticking over.
 Invoices are due, and you, #{selected_person}, have been randomly selected to make sure they get processed this week. Lucky you!
 
 You don't need to drop everything, but try to make sure you get it done this week. We're counting on you!
+
+You should also chase up the following invoices which are overdue :-
+
+#{list_of_overdue_invoices}
 
 All the best,
 

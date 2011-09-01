@@ -2,6 +2,7 @@ source :rubygems
 
 gem "mail"
 gem "whenever"
+gem "free_agent", :git => "git://github.com/freerange/free_agent.git"
 gem "rake"
 
 group :development do

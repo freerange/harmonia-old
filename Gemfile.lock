@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/freerange/free_agent.git
+  revision: 00869ba2689796130f6bc0b0a5131e9cea650923
+  specs:
+    free_agent (0.1.0)
+      activesupport
+      crack
+      hashie
+      rest-client
+
+GIT
   remote: git://github.com/tomafro/tomafro-deploy.git
   revision: e22a9788810011716e74188ef745766d0d84e7c9
   specs:
@@ -17,6 +27,8 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
+    crack (0.1.8)
+    hashie (1.1.0)
     highline (1.6.2)
     i18n (0.6.0)
     mail (2.3.0)
@@ -35,6 +47,8 @@ GEM
       net-ssh (>= 1.99.1)
     polyglot (0.3.2)
     rake (0.9.2)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
@@ -46,6 +60,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  free_agent!
   mail
   mocha
   rake
