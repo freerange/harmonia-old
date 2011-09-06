@@ -6,10 +6,18 @@ Invoices are due, and you, <%= selected_person %>, have been randomly selected t
 
 You don't need to drop everything, but try to make sure you get it done this week. We're counting on you!
 
+<% if overdue_invoices.any? %>
 You should also chase up the following invoices which are overdue :-
 
-<%= overdue_invoices %>
+<% overdue_invoices.each_with_index do |invoice, index| %>
+  * '<%= invoice.reference %>' for £<%= "%0.2f" % invoice.net_value %> was due on <%= invoice.due_on.to_date.to_s(:rfc822) %> [<%= index+1 %>]"
+<% end %>
+<% end %>
 
 All the best,
 
 Chaos Administrator
+
+<% overdue_invoices.each_with_index do |invoice, index| %>
+[<%= index+1 %>] <%= invoice.url %>
+<% end %>
