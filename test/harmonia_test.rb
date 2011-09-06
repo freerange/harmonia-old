@@ -44,4 +44,14 @@ class HarmoniaTest < Test::Unit::TestCase
 
     assert Mail::TestMailer.deliveries.find { |m| m.subject == "Tom is writing the notes this week." }
   end
+
+  def test_doesnt_mention_overdue_invoices_if_there_werent_any
+    harmonia = Harmonia.new
+    harmonia.stubs(:free_agent_config).returns(:domain => "x", :username => "y", :password => "z")
+    invoices = []
+    FreeAgent::Company.stubs(:new).returns(stub('company', :invoices => invoices))
+
+    harmonia.send_invoice_email
+    assert_no_match /You should also chase up the following invoices which are overdue/, Mail::TestMailer.deliveries.first.body.to_s
+  end
 end

@@ -2,6 +2,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'mail'
+require 'free_agent'
 
 Mail.defaults do
   if ENV["ENV"] == "test"
@@ -29,8 +30,12 @@ class Harmonia
     @weeknotes_delegate ||= remaining_candidates[rand(remaining_candidates.length)]
   end
 
-  def overdue_invoices
+  def free_agent_config
     config = YAML.load(File.open(File.expand_path("../../config/free_agent.yml", __FILE__)))
+  end
+
+  def overdue_invoices
+    config = free_agent_config
     freerange = FreeAgent::Company.new(config[:domain], config[:username], config[:password])
     @overdue_invoices ||= freerange.invoices.select { |i| i.status == "Overdue" }
   end
