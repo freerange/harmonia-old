@@ -28,6 +28,7 @@ class HarmoniaTest < Test::Unit::TestCase
   end
 
   def test_sends_mail_to_invoice_delegate
+    Harmonia.any_instance.stubs(:overdue_invoices).returns([])
     Harmonia.any_instance.stubs(:invoice_delegate).returns "James"
 
     Harmonia.run
@@ -36,6 +37,7 @@ class HarmoniaTest < Test::Unit::TestCase
   end
 
   def test_sends_mail_to_weeknotes_delegate
+    Harmonia.any_instance.stubs(:overdue_invoices).returns([])
     Harmonia.any_instance.stubs(:weeknotes_delegate).returns "Tom"
 
     Harmonia.run
