@@ -50,6 +50,7 @@ class Harmonia
 
   def send_invoice_email
     selected_person = invoice_delegate
+    overdue_invoices = list_of_overdue_invoices
     mail = Mail.deliver do
         from '"Chaos Administrator" <chaos@gofreerange.com>'
           to ENV["TO"] || 'lets@gofreerange.com'
@@ -65,7 +66,7 @@ You don't need to drop everything, but try to make sure you get it done this wee
 
 You should also chase up the following invoices which are overdue :-
 
-#{list_of_overdue_invoices}
+#{overdue_invoices}
 
 All the best,
 
