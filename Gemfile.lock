@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: git://github.com/tomafro/tomafro-deploy.git
-  revision: e22a9788810011716e74188ef745766d0d84e7c9
+  revision: ad05a8078d37f79bf093c1649b4a7190f7daf6a0
   specs:
     tomafro-deploy (0.0.1)
       capistrano (~> 2.6.0)
