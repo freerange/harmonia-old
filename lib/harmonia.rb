@@ -3,6 +3,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'mail'
 require 'free_agent'
+require 'erb'
 
 Mail.defaults do
   if ENV["ENV"] == "test"
@@ -56,48 +57,32 @@ class Harmonia
   def send_invoice_email
     selected_person = invoice_delegate
     overdue_invoices = list_of_overdue_invoices
+    email_body = render_email('invoice', binding)
     mail = Mail.deliver do
         from '"Chaos Administrator" <chaos@gofreerange.com>'
           to ENV["TO"] || 'lets@gofreerange.com'
      subject "#{selected_person}, it's your turn to do invoices."
-        body <<-EOS
-Greetings Free Range!
-
-It's me, the CHAOS ADMINISTRATOR. I'm here to keep bid'ness ticking over.
-
-Invoices are due, and you, #{selected_person}, have been randomly selected to make sure they get processed this week. Lucky you!
-
-You don't need to drop everything, but try to make sure you get it done this week. We're counting on you!
-
-You should also chase up the following invoices which are overdue :-
-
-#{overdue_invoices}
-
-All the best,
-
-Chaos Administrator
-    EOS
+        body email_body
     end
   end
 
   def send_weeknotes_email
     selected_person = weeknotes_delegate
+    email_body = render_email('weeknotes', binding)
     mail = Mail.deliver do
         from '"Chaos Administrator" <chaos@gofreerange.com>'
           to ENV["TO"] || 'lets@gofreerange.com'
      subject "#{selected_person} is writing the notes this week."
-        body <<-EOS
-Greetings Free Range!
-
-It's me, the CHAOS ADMINISTRATOR. I'm here to keep bid'ness ticking over.
-
-#{selected_person}, you've been chosen to write the weeknotes. Start gathering as soon as you like; you'll be publishing them on Friday.
-
-All the best,
-
-Chaos Administrator
-    EOS
+        body email_body
     end
+  end
+
+  def render_email(template, b)
+    ERB.new(email_template(template)).result(b)
+  end
+
+  def email_template(name)
+    File.read(File.expand_path("../emails/#{name}.erb", __FILE__))
   end
 
   def self.run
