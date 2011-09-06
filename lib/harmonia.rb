@@ -43,7 +43,6 @@ class Harmonia
 
   def send_invoice_email
     selected_person = invoice_delegate
-    # overdue_invoices = overdue_invoices
     email_body = render_email('invoice', binding)
     mail = Mail.deliver do
         from '"Chaos Administrator" <chaos@gofreerange.com>'
