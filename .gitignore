@@ -1,2 +1,5 @@
 config/free_agent.yml
 log/*
+config/assignments.yml
+config/people.yml
+tmp

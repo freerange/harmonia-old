@@ -1,29 +1,31 @@
-# Use this file to easily define all of your cron jobs.
-#
-# It's helpful, but not entirely necessary to understand cron before proceeding.
-# http://en.wikipedia.org/wiki/Cron
-
-# Example:
-#
-# set :output, "/path/to/my/cron_log.log"
-#
-# every 2.hours do
-#   command "/usr/bin/some_great_command"
-#   runner "MyModel.some_method"
-#   rake "some:great:rake:task"
-# end
-#
-# every 4.days do
-#   runner "AnotherModel.prune_old_records"
-# end
-
-# Learn more: http://github.com/javan/whenever
-
 set :ruby, `which ruby`.strip
 set :path, File.expand_path("../lib", __FILE__)
 
-job_type :harmonia, %{cd :deploy_to && bundle exec :ruby -I:path -rharmonia -e "Harmonia.run" &>> :deploy_to/log/cron.log}
+harmonia_run = %{cd :deploy_to && bundle exec :ruby -I:path -rharmonia -e}
+job_type :assign,   %{#{harmonia_run} "Harmonia.new.assign(::task)"}
+job_type :unassign, %{#{harmonia_run} "Harmonia.new.unassign(::task)"}
+job_type :remind,   %{#{harmonia_run} "Harmonia.new.remind(::task)"}
 
 every :monday, :at => "12:00pm" do
-  harmonia "x"
+  assign :invoicing
+  assign :weeknotes
 end
+
+every :thursday, :at => "12:00pm" do
+  remind :weeknotes
+end
+
+# # noon on the 1st of March, June, September and December, regardless of weekday
+# every '0 12 1 2,5,8,11 *' do
+#   assign :vat_return
+# end
+# 
+# # noon on the 7th of March, June, September and December, regardless of weekday
+# every '0 12 7 2,5,8,11 *' do
+#   remind :vat_return
+# end
+# 
+# # 1pm on the 7th of March, June, September and December, regardless of weekday
+# every '0 13 7 2,5,8,11 *' do
+#   unassign :vat_return
+# end
