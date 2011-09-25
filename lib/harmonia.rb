@@ -47,6 +47,7 @@ class Harmonia
     selected_person = invoice_delegate
     email_body = render_email('invoice', binding)
     mail = Mail.deliver do
+      self.charset = "UTF-8"
         from '"Chaos Administrator" <chaos@gofreerange.com>'
           to ENV["TO"] || 'lets@gofreerange.com'
      subject "#{selected_person}, it's your turn to do invoices."
@@ -58,6 +59,7 @@ class Harmonia
     selected_person = weeknotes_delegate
     email_body = render_email('weeknotes', binding)
     mail = Mail.deliver do
+      self.charset = "UTF-8"
         from '"Chaos Administrator" <chaos@gofreerange.com>'
           to ENV["TO"] || 'lets@gofreerange.com'
      subject "#{selected_person} is writing the notes this week."
