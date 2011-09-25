@@ -1,9 +1,10 @@
-require "tomafro/deploy"
+require "recap/deploy"
 
 server "gofreerange.com", :app
 
 set :application, "harmonia"
 set :repository,  "git@github.com:freerange/harmonia.git"
+set :deploy_to, "/var/apps/#{application}"
 
 set(:smtp_password) do
   puts "Enter the SMTP password below"
