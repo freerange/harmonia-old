@@ -22,7 +22,7 @@
 set :ruby, `which ruby`.strip
 set :path, File.expand_path("../lib", __FILE__)
 
-job_type :harmonia, %{cd :deploy_to && bundle exec :ruby -I:path -rharmonia -e "Harmonia.run"}
+job_type :harmonia, %{cd :deploy_to && bundle exec :ruby -I:path -rharmonia -e "Harmonia.run" &>> :deploy_to/log/cron.log}
 
 every :monday, :at => "12:00pm" do
   harmonia "x"
