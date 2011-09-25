@@ -1,4 +1,5 @@
 require "recap/deploy"
+require "recap/env"
 
 server "gofreerange.com", :app
 
@@ -12,7 +13,7 @@ set(:smtp_password) do
 end
 set :whenever_command, "bundle exec whenever"
 set(:whenever_identifier)   { application }
-set(:whenever_update_flags) { "--update-crontab #{whenever_identifier} -u #{application_user} -s 'password=#{smtp_password}&deploy_to=#{deploy_to}'" }
+set(:whenever_update_flags) { "--update-crontab #{whenever_identifier} -u #{application_user} -s 'deploy_to=#{deploy_to}'" }
 set(:whenever_clear_flags)  { "--clear-crontab #{whenever_identifier} -u #{application_user}" }
 
 before "deploy:update_code", "whenever:clear_crontab"

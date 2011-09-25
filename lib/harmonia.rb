@@ -13,7 +13,7 @@ Mail.defaults do
                              :port                 => 587,
                              :domain               => 'gofreerange.com',
                              :user_name            => 'chaos@gofreerange.com',
-                             :password             => ENV["PASSWORD"],
+                             :password             => ENV["SMTP_PASSWORD"],
                              :authentication       => 'plain',
                              :enable_starttls_auto => true  }
   end
