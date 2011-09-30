@@ -45,6 +45,9 @@ Deployment Notes
 
 At the moment this is clearly tailored towards our company, and this may always be the case.
 
-You'll need to set the SMTP_PASSWORD environment variable; one of of doing this is via the `env` recipes that `recap` provides.
+Some configuration should be provided via environment variables. These can be set via the `env` recipes that `recap` provides:
 
-After first deployment, you'll need to create a `config/free_agent.yml` file containing FreeAgent credentials. You can see an example file in `config/free_agent.example.yml`.
+- SMTP_PASSWORD - the password for the email account used to dispatch emails
+- FREEAGENT_DOMAIN - the subdomain of FreeAgent
+- FREEAGENT_EMAIL - the email address to log in to FreeAgent with
+- FREEAGENT_PASSWORD - the password for the FreeAgent account

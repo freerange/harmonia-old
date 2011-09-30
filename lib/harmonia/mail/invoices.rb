@@ -19,13 +19,11 @@ class Harmonia
 
       private
 
-      def free_agent_config
-        config = YAML.load(File.open(File.expand_path("../../config/free_agent.yml", __FILE__)))
-      end
-
       def overdue_invoices
-        config = free_agent_config
-        freerange = FreeAgent::Company.new(config[:domain], config[:username], config[:password])
+        domain = ENV["FREEAGENT_DOMAIN"]
+        email = ENV["FREEAGENT_EMAIL"]
+        password = ENV["FREEAGENT_PASSWORD"]
+        freerange = FreeAgent::Company.new(domain, email, password)
         @overdue_invoices ||= freerange.invoices.select { |i| i.status == "Overdue" }
       end
     end
