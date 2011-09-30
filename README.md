@@ -47,6 +47,7 @@ At the moment this is clearly tailored towards our company, and this may always 
 
 Some configuration should be provided via environment variables. These can be set via the `env` recipes that `recap` provides:
 
+- HARMONIA_PEOPLE - A comma-separated list of people to assign to, e.g. "Tom, James A, James M, Chris, Jase"
 - SMTP_PASSWORD - the password for the email account used to dispatch emails
 - FREEAGENT_DOMAIN - the subdomain of FreeAgent
 - FREEAGENT_EMAIL - the email address to log in to FreeAgent with

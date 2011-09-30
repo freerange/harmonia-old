@@ -9,7 +9,8 @@ class Harmonia
   autoload :Mail, "harmonia/mail"
 
   def initialize(store_path)
-    @administrator = Harmonia::Administrator.new(store_path)
+    people = ENV["HARMONIA_PEOPLE"].split(",").map(&:strip)
+    @administrator = Harmonia::Administrator.new(people, store_path)
   end
 
   def assign(task)

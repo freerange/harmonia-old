@@ -2,10 +2,10 @@ require 'yaml'
 
 class Harmonia
   class Administrator
-    attr_accessor :people
+    attr_reader :people
 
-    def initialize(store_path="config/assignments.yml", people_path="config/people.yml")
-      @people = YAML.load_file(people_path) rescue []
+    def initialize(people, store_path="config/assignments.yml")
+      @people = people
       @store_path = store_path
       @assigned = YAML.load_file(store_path) rescue {}
     end
@@ -37,7 +37,7 @@ class Harmonia
     end
 
     def random_available_person_for(task)
-      remaining_candidates = @people - @assigned.reject { |t,_| t == task }.values
+      remaining_candidates = people - @assigned.reject { |t,_| t == task }.values
       if remaining_candidates.empty?
         task_count = @assigned.values.inject({}) do |h, person|
           h[person] ||= 0
@@ -45,7 +45,7 @@ class Harmonia
           h
         end
         remaining_candidates = task_count.reject { |person, count| count == task_count.values.max }.keys
-        remaining_candidates = @people if remaining_candidates.empty?
+        remaining_candidates = people if remaining_candidates.empty?
       end
       remaining_candidates[rand(remaining_candidates.length)]
     end

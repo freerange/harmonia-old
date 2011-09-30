@@ -2,9 +2,8 @@ require "test_helper"
 
 class AdministratorTest < Test::Unit::TestCase
   def setup
-    @administrator = Harmonia::Administrator.new(store_path)
+    @administrator = Harmonia::Administrator.new(["Tom", "Dick", "Harry"], store_path)
     @administrator.reset!
-    @administrator.people = %w(Tom Dick Harry)
   end
 
   def test_should_be_able_to_assign_someone_to_a_task
@@ -15,7 +14,7 @@ class AdministratorTest < Test::Unit::TestCase
 
   def test_should_store_and_reload_the_assigned_people
     task_a_person = @administrator.assign(:task_a)
-    @other_harmonia = Harmonia::Administrator.new(store_path)
+    @other_harmonia = Harmonia::Administrator.new(["Tom", "Dick", "Harry"], store_path)
     assert_equal task_a_person, @other_harmonia.assignee(:task_a)
   end
 
