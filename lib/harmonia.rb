@@ -18,6 +18,11 @@ class Harmonia
     dispatch_mail_for_task(task, assignee)
   end
 
+  def remind(task)
+    assignee = @administrator.assignee(task)
+    dispatch_reminder_mail_for_task(task, assignee)
+  end
+
   private
 
   def dispatch_mail_for_task(task, assignee)
@@ -26,6 +31,13 @@ class Harmonia
       Harmonia::Mail::Invoices.new(assignee).send
     when :weeknotes
       Harmonia::Mail::Weeknotes.new(assignee).send
+    end
+  end
+
+  def dispatch_reminder_mail_for_task(task, assignee)
+    case task
+    when :weeknotes
+      Harmonia::Mail::Weeknotes.new(assignee).send_reminder
     end
   end
 end

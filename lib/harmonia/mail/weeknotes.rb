@@ -14,6 +14,18 @@ class Harmonia
             body email_body
         end
       end
+
+      def send_reminder
+        selected_person = @assignee
+        email_body = render_email('weeknotes', binding)
+        mail = ::Mail.deliver do
+          self.charset = "UTF-8"
+            from '"Chaos Administrator" <chaos@gofreerange.com>'
+              to ENV["TO"] || 'lets@gofreerange.com'
+         subject "#{selected_person}, don't forget the weeknotes."
+            body email_body
+        end
+      end
     end
   end
 end
