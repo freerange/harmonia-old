@@ -9,7 +9,7 @@ class Harmonia
   autoload :Mail, "harmonia/mail"
 
   def initialize(store_path=File.expand_path("../../config/assignments.yml", __FILE__))
-    people = ENV["HARMONIA_PEOPLE"].split(",").map(&:strip)
+    people = ["James A", "James M", "Tom", "Jase", "Chris"]
     @administrator = Harmonia::Administrator.new(people, store_path)
   end
 
