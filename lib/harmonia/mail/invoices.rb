@@ -1,5 +1,4 @@
 require 'harmonia/mail'
-require 'yaml'
 require 'free_agent'
 
 class Harmonia
