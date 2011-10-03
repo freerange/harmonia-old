@@ -24,6 +24,10 @@ class Harmonia
       @assignee = person
     end
 
+    def send
+      to_mail.deliver
+    end
+
     private
 
     def render_email(template, b)

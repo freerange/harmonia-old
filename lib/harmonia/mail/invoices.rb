@@ -4,10 +4,10 @@ require 'free_agent'
 class Harmonia
   class Mail
     class Invoices < Harmonia::Mail
-      def send
+      def to_mail
         selected_person = @assignee
         email_body = render_email('invoices', binding)
-        mail = ::Mail.deliver do
+        ::Mail.new do
           self.charset = "UTF-8"
             from '"Chaos Administrator" <chaos@gofreerange.com>'
               to ENV["TO"] || 'lets@gofreerange.com'

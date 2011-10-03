@@ -3,10 +3,10 @@ require 'harmonia/mail'
 class Harmonia
   class Mail
     class Weeknotes < Harmonia::Mail
-      def send
+      def to_mail
         selected_person = @assignee
         email_body = render_email('weeknotes', binding)
-        mail = ::Mail.deliver do
+        mail = ::Mail.new do
           self.charset = "UTF-8"
             from '"Chaos Administrator" <chaos@gofreerange.com>'
               to ENV["TO"] || 'lets@gofreerange.com'
