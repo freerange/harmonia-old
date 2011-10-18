@@ -7,7 +7,7 @@ job_type :unassign, %{#{harmonia_run} "Harmonia.new.unassign(::task)"}
 job_type :remind,   %{#{harmonia_run} "Harmonia.new.remind(::task)"}
 
 every :monday, :at => "12:00pm" do
-  assign :invoicing
+  assign :invoices
   assign :weeknotes
 end
 
