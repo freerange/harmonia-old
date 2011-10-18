@@ -1,7 +1,7 @@
 set :ruby, `which ruby`.strip
-set :path, File.expand_path("../lib", __FILE__)
+set :path, File.expand_path("..", __FILE__)
 
-harmonia_run = %{cd :deploy_to && bundle exec :ruby -I:path -rharmonia -e}
+harmonia_run = %{cd :path && bundle exec :ruby -I:path/lib -rharmonia -e}
 job_type :assign,   %{#{harmonia_run} "Harmonia.new.assign(::task)"}
 job_type :unassign, %{#{harmonia_run} "Harmonia.new.unassign(::task)"}
 job_type :remind,   %{#{harmonia_run} "Harmonia.new.remind(::task)"}
