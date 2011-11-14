@@ -26,7 +26,7 @@ class Harmonia
     end
 
     def unassign(task)
-      @assigned.delete(:task)
+      @assigned.delete(task)
       write_store
     end
 

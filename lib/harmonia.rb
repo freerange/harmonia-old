@@ -23,6 +23,10 @@ class Harmonia
     dispatch_reminder_mail_for_task(task, assignee)
   end
 
+  def unassign(task)
+    @administrator.unassign(task)
+  end
+
   private
 
   def dispatch_mail_for_task(task, assignee)

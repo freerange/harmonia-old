@@ -24,6 +24,20 @@ class AdministratorTest < Test::Unit::TestCase
     assert_equal person_2, @administrator.assignee(:task_a)
   end
 
+  def test_should_be_able_to_unassign_a_task
+    @administrator.assign(:task_a)
+    @administrator.unassign(:task_a)
+    assert_equal nil, @administrator.assignee(:task_a)
+  end
+
+  def test_should_be_able_to_unassign_everyone
+    @administrator.assign(:task_a)
+    @administrator.assign(:task_b)
+    @administrator.reset!
+    assert_equal nil, @administrator.assignee(:task_a)
+    assert_equal nil, @administrator.assignee(:task_b)
+  end
+
   def test_should_not_assign_the_same_person_to_two_tasks
     100.times do
       person_1 = @administrator.assign(:task_a)
