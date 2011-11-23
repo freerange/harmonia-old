@@ -7,10 +7,11 @@ require 'bundler/setup'
 class Harmonia
   autoload :Administrator, "harmonia/administrator"
   autoload :Mail, "harmonia/mail"
+  autoload :Assignments, "harmonia/assignments"
 
   def initialize(store_path=File.expand_path("../../config/assignments.yml", __FILE__))
     people = ["James A", "James M", "Tom", "Jase", "Chris"]
-    @administrator = Harmonia::Administrator.new(people, store_path)
+    @administrator = Harmonia::Administrator.new(people, Harmonia::Assignments.new(store_path))
   end
 
   def assign(task)

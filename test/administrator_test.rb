@@ -1,9 +1,10 @@
 require "test_helper"
 
-class AdministratorTest < Test::Unit::TestCase
+class AdministratorAPITest < Test::Unit::TestCase
   def setup
-    @administrator = Harmonia::Administrator.new(["Tom", "Dick", "Harry"], store_path)
-    @administrator.reset!
+    assignments = Harmonia::Assignments.new(store_path)
+    @administrator = Harmonia::Administrator.new(["Tom", "Dick", "Harry"], assignments)
+    @administrator.unassign_all
   end
 
   def test_should_be_able_to_assign_someone_to_a_task
@@ -14,7 +15,8 @@ class AdministratorTest < Test::Unit::TestCase
 
   def test_should_store_and_reload_the_assigned_people
     task_a_person = @administrator.assign(:task_a)
-    @other_harmonia = Harmonia::Administrator.new(["Tom", "Dick", "Harry"], store_path)
+    assignments = Harmonia::Assignments.new(store_path)
+    @other_harmonia = Harmonia::Administrator.new(["Tom", "Dick", "Harry"], assignments)
     assert_equal task_a_person, @other_harmonia.assignee(:task_a)
   end
 
@@ -33,12 +35,20 @@ class AdministratorTest < Test::Unit::TestCase
   def test_should_be_able_to_unassign_everyone
     @administrator.assign(:task_a)
     @administrator.assign(:task_b)
-    @administrator.reset!
+    @administrator.unassign_all
     assert_equal nil, @administrator.assignee(:task_a)
     assert_equal nil, @administrator.assignee(:task_b)
   end
+end
 
-  def test_should_not_assign_the_same_person_to_two_tasks
+class AdministratorFairnessTest < Test::Unit::TestCase
+  def setup
+    assignments = Harmonia::Assignments.new(store_path)
+    @administrator = Harmonia::Administrator.new(["Tom", "Dick", "Harry"], assignments)
+    @administrator.unassign_all
+  end
+
+  def test_should_not_assign_the_same_person_to_two_tasks_when_others_have_no_tasks
     100.times do
       person_1 = @administrator.assign(:task_a)
       person_2 = @administrator.assign(:task_b)

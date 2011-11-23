@@ -4,50 +4,42 @@ class Harmonia
   class Administrator
     attr_reader :people
 
-    def initialize(people, store_path="config/assignments.yml")
+    def initialize(people, assignments)
       @people = people
-      @store_path = store_path
-      @assigned = YAML.load_file(store_path) rescue {}
+      @assignments = assignments
     end
 
-    def reset!
-      @assigned = {}
-      write_store
+    def unassign_all
+      @assignments.unassign_all
     end
 
     def assign(task)
-      @assigned[task] = random_available_person_for(task)
-      write_store
+      person = random_available_person_for(task)
+      @assignments.assign(task, person)
       assignee(task)
     end
 
     def assignee(task)
-      @assigned[task]
+      @assignments.assigned_to(task)
     end
 
     def unassign(task)
-      @assigned.delete(task)
-      write_store
+      @assignments.unassign(task)
     end
 
     private
 
-    def write_store
-      File.open(@store_path, "w") { |f| f.write @assigned.to_yaml }
+    def random_available_person_for(task)
+      task_counts = @people.inject({}) do |h, person|
+        h[person] = assigned_tasks_ignoring(task, person).count
+        h
+      end
+
+      @people.select { |person| task_counts[person] == task_counts.values.min }.shuffle.first
     end
 
-    def random_available_person_for(task)
-      remaining_candidates = people - @assigned.reject { |t,_| t == task }.values
-      if remaining_candidates.empty?
-        task_count = @assigned.values.inject({}) do |h, person|
-          h[person] ||= 0
-          h[person] += 1
-          h
-        end
-        remaining_candidates = task_count.reject { |person, count| count == task_count.values.max }.keys
-        remaining_candidates = people if remaining_candidates.empty?
-      end
-      remaining_candidates[rand(remaining_candidates.length)]
+    def assigned_tasks_ignoring(task, person)
+      @assignments.tasks_assigned_to(person) - [task]
     end
   end
 end
