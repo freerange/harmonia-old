@@ -27,4 +27,10 @@ class HarmoniaTest < Test::Unit::TestCase
     @harmonia.remind(:weeknotes)
     assert Mail::TestMailer.deliveries.find { |m| m.subject =~ /#{assignee}, don't forget the weeknotes.$/ }
   end
+
+  def test_sends_mail_to_fire_logbook_assignee_after_assignment
+    @harmonia.assign(:fire_logbook)
+
+    assert Mail::TestMailer.deliveries.find { |m| m.subject =~ /it's your turn to update the Fire Logbook today.$/ }
+  end
 end
