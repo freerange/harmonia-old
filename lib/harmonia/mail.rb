@@ -21,6 +21,11 @@ class Harmonia
     autoload :Weeknotes, "harmonia/mail/weeknotes"
     autoload :FireLogbook, "harmonia/mail/fire_logbook"
 
+    def self.build(task, *args)
+      klass = task.to_s.split("_").map(&:capitalize).join
+      const_get(klass).new(*args)
+    end
+
     def initialize(person)
       @assignee = person
     end

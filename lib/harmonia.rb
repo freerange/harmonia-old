@@ -31,16 +31,9 @@ class Harmonia
   private
 
   def dispatch_mail_for_task(task, assignee)
-    case task
-    when :invoices
-      Harmonia::Mail::Invoices.new(assignee).send
-    when :weeknotes
-      Harmonia::Mail::Weeknotes.new(assignee).send
-    when :fire_logbook
-      Harmonia::Mail::FireLogbook.new(assignee).send
-    else
-      raise "Task #{task} isn't known to harmonia"
-    end
+    Harmonia::Mail.build(task, assignee).send
+  rescue NameError => e
+    raise "Task #{task} isn't known to harmonia"
   end
 
   def dispatch_reminder_mail_for_task(task, assignee)
