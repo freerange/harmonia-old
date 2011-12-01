@@ -19,6 +19,7 @@ class Harmonia
   class Mail
     autoload :Invoices, "harmonia/mail/invoices"
     autoload :Weeknotes, "harmonia/mail/weeknotes"
+    autoload :FireLogbook, "harmonia/mail/fire_logbook"
 
     def initialize(person)
       @assignee = person

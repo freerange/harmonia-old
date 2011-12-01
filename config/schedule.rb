@@ -16,6 +16,14 @@ every :monday, :at => "12:00pm" do
   assign :weeknotes
 end
 
+every :thursday, :at => "09.59am" do
+  unassign :fire_logbook
+end
+
+every :thursday, :at => "10.00am" do
+  assign :fire_logbook
+end
+
 every :thursday, :at => "12:00pm" do
   remind :weeknotes
 end

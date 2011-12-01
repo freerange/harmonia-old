@@ -36,6 +36,8 @@ class Harmonia
       Harmonia::Mail::Invoices.new(assignee).send
     when :weeknotes
       Harmonia::Mail::Weeknotes.new(assignee).send
+    when :fire_logbook
+      Harmonia::Mail::FireLogbook.new(assignee).send
     else
       raise "Task #{task} isn't known to harmonia"
     end
