@@ -10,6 +10,7 @@ every :monday, :at => "11.59am" do
   unassign :invoices
   unassign :weeknotes
   unassign :fire_logbook
+  unassign :wages
 end
 
 every :monday, :at => "12:00pm" do
@@ -23,6 +24,10 @@ end
 
 every :thursday, :at => "12:00pm" do
   remind :weeknotes
+end
+
+every "0 12 25 * *" do
+  assign :wages
 end
 
 # # noon on the 1st of March, June, September and December, regardless of weekday
