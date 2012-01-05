@@ -31,18 +31,3 @@ end
 every "0 12 25 * *" do
   assign :wages
 end
-
-# # noon on the 1st of March, June, September and December, regardless of weekday
-# every '0 12 1 2,5,8,11 *' do
-#   assign :vat_return
-# end
-# 
-# # noon on the 7th of March, June, September and December, regardless of weekday
-# every '0 12 7 2,5,8,11 *' do
-#   remind :vat_return
-# end
-# 
-# # 1pm on the 7th of March, June, September and December, regardless of weekday
-# every '0 13 7 2,5,8,11 *' do
-#   unassign :vat_return
-# end
