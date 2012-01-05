@@ -20,6 +20,22 @@ class HarmoniaTest < Test::Unit::TestCase
     assert Mail::TestMailer.deliveries.find { |m| m.subject =~ /is writing the notes this week.$/ }
   end
 
+  def test_sends_mail_to_vat_return_assignee_after_assignment
+    stub_free_agent_timeline!
+    Timecop.travel(Date.parse("2012-02-29")) do
+      @harmonia.assign(:vat_return)
+    end
+
+    assert Mail::TestMailer.deliveries.find { |m| m.subject =~ /is submitting the VAT return this week.$/ }
+  end
+
+  def test_should_not_send_email_if_no_vat_return_is_due_soon
+    Harmonia::Mail::VatReturn.stubs(:required?).returns(false)
+    @harmonia.assign(:vat_return)
+
+    assert Mail::TestMailer.deliveries.empty?
+  end
+
   def test_reminds_assigned_user_about_weeknotes
     @harmonia.assign(:weeknotes)
     assignee = Mail::TestMailer.deliveries.first.subject.match(/^([\w\s]+) is writing/)[1]

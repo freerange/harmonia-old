@@ -3,6 +3,7 @@
 
 require 'rubygems'
 require 'bundler/setup'
+require 'harmonia/freeagent_timeline'
 
 class Harmonia
   autoload :Administrator, "harmonia/administrator"
@@ -15,8 +16,10 @@ class Harmonia
   end
 
   def assign(task)
-    assignee = @administrator.assign(task)
-    dispatch_mail_for_task(task, assignee)
+    if task_required?(task)
+      assignee = @administrator.assign(task)
+      dispatch_mail_for_task(task, assignee)
+    end
   end
 
   def remind(task)
@@ -30,10 +33,23 @@ class Harmonia
 
   private
 
+  def task_required?(task)
+    case task
+    when :vat_return
+      Harmonia::Mail::VatReturn.required?
+    else
+      true
+    end
+  end
+
   def dispatch_mail_for_task(task, assignee)
     Harmonia::Mail.build(task, assignee).send
   rescue NameError => e
-    raise "Task #{task} isn't known to harmonia"
+    if e.is_a?(NoMethodError)
+      raise e
+    else
+      raise "Task #{task} isn't known to harmonia"
+    end
   end
 
   def dispatch_reminder_mail_for_task(task, assignee)
