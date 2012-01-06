@@ -12,12 +12,14 @@ every :monday, :at => "11.59am" do
   unassign :fire_logbook
   unassign :wages
   unassign :vat_return
+  unassign :annual_return
 end
 
 every :monday, :at => "12:00pm" do
   assign :invoices
   assign :weeknotes
   assign :vat_return
+  assign :annual_return
 end
 
 every :thursday, :at => "10.00am" do

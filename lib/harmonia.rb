@@ -37,6 +37,8 @@ class Harmonia
     case task
     when :vat_return
       Harmonia::Mail::VatReturn.required?
+    when :annual_return
+      Harmonia::Mail::AnnualReturn.required?
     else
       true
     end
