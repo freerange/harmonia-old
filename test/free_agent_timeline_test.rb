@@ -51,4 +51,27 @@ class FreeAgentTimelineTest < Test::Unit::TestCase
       assert timeline.upcoming_annual_returns.any?
     end
   end
+
+  def test_should_parse_corporation_tax_payment_due_dates_from_feed
+    timeline = FreeAgent::Timeline.new("freerange", "api-key")
+    corporation_tax_due = timeline.corporation_tax_payments
+    assert_equal 1, corporation_tax_due.length
+    next_corp_tax = corporation_tax_due.first
+    assert_equal "Corporation Tax\, year ending 31 Jan 12 Payment Due £70\,635.61", next_corp_tax.summary.strip
+    assert_equal Date.parse("2012-11-01"), next_corp_tax.due
+  end
+
+  def test_should_return_no_upcoming_corporation_tax_payments_if_none_are_due_next_week
+    Timecop.travel(Date.parse("2012-10-15")) do
+      timeline = FreeAgent::Timeline.new("freerange", "api-key")
+      assert timeline.upcoming_corporation_tax_payments.empty?
+    end
+  end
+
+  def test_should_return_any_upcoming_corporation_tax_payments_if_some_are_due_next_week
+    Timecop.travel(Date.parse("2012-10-22")) do
+      timeline = FreeAgent::Timeline.new("freerange", "api-key")
+      assert timeline.upcoming_corporation_tax_payments.any?
+    end
+  end
 end

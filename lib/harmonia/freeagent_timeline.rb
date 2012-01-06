@@ -46,4 +46,14 @@ class FreeAgent::Timeline
   def upcoming_annual_returns
     annual_returns.select { |ar| ar.due_next_week? }
   end
+
+  def corporation_tax_payments
+    @events.select { |e| e.summary =~ /(Corporation Tax)(.+)(Payment Due)/ }.map do |c|
+      Return.new(c.summary, c.dtstart)
+    end
+  end
+
+  def upcoming_corporation_tax_payments
+    corporation_tax_payments.select { |ct| ct.due_next_week? }
+  end
 end
