@@ -5,7 +5,7 @@ require "date"
 
 class FreeAgent::Timeline
 
-  class Return
+  class Task
     attr_reader :summary, :due
 
     def initialize(summary, due)
@@ -29,7 +29,7 @@ class FreeAgent::Timeline
 
   def vat_returns
     @events.select { |e| e.summary =~ /VAT Return/ }.map do |c|
-      Return.new(c.summary, c.dtstart)
+      Task.new(c.summary, c.dtstart)
     end
   end
 
@@ -39,7 +39,7 @@ class FreeAgent::Timeline
 
   def annual_returns
     @events.select { |e| e.summary =~ /Annual Return/ }.map do |c|
-      Return.new(c.summary, c.dtstart)
+      Task.new(c.summary, c.dtstart)
     end
   end
 
@@ -49,11 +49,21 @@ class FreeAgent::Timeline
 
   def corporation_tax_payments
     @events.select { |e| e.summary =~ /(Corporation Tax)(.+)(Payment Due)/ }.map do |c|
-      Return.new(c.summary, c.dtstart)
+      Task.new(c.summary, c.dtstart)
     end
   end
 
   def upcoming_corporation_tax_payments
     corporation_tax_payments.select { |ct| ct.due_next_week? }
+  end
+
+  def corporation_tax_submissions
+    @events.select { |e| e.summary =~ /(Corporation Tax)(.+)(Submission Due)/ }.map do |c|
+      Task.new(c.summary, c.dtstart)
+    end
+  end
+
+  def upcoming_corporation_tax_submissions
+    corporation_tax_submissions.select { |ct| ct.due_next_week? }
   end
 end
