@@ -4,7 +4,8 @@ require "open-uri"
 require "date"
 
 class FreeAgent::Timeline
-  class VatReturn
+
+  class Return
     attr_reader :summary, :due
 
     def initialize(summary, due)
@@ -28,11 +29,21 @@ class FreeAgent::Timeline
 
   def vat_returns
     @events.select { |e| e.summary =~ /VAT Return/ }.map do |c|
-      VatReturn.new(c.summary, c.dtstart)
+      Return.new(c.summary, c.dtstart)
     end
   end
 
   def upcoming_vat_returns
     vat_returns.select { |vr| vr.due_next_week? }
+  end
+
+  def annual_returns
+    @events.select { |e| e.summary =~ /Annual Return/ }.map do |c|
+      Return.new(c.summary, c.dtstart)
+    end
+  end
+
+  def upcoming_annual_returns
+    annual_returns.select { |ar| ar.due_next_week? }
   end
 end

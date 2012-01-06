@@ -22,6 +22,7 @@ class Harmonia
     autoload :FireLogbook, "harmonia/mail/fire_logbook"
     autoload :Wages, "harmonia/mail/wages"
     autoload :VatReturn, "harmonia/mail/vat_return"
+    autoload :AnnualReturn, "harmonia/mail/annual_return"
 
     def self.build(task, *args)
       klass = task.to_s.split("_").map(&:capitalize).join
