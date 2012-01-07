@@ -13,6 +13,8 @@ every :monday, :at => "11.59am" do
   unassign :wages
   unassign :vat_return
   unassign :annual_return
+  unassign :corporation_tax_payment
+  unassign :corporation_tax_submission
 end
 
 every :monday, :at => "12:00pm" do
@@ -20,6 +22,8 @@ every :monday, :at => "12:00pm" do
   assign :weeknotes
   assign :vat_return
   assign :annual_return
+  assign :corporation_tax_payment
+  assign :corporation_tax_submission
 end
 
 every :thursday, :at => "10.00am" do

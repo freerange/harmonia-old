@@ -39,6 +39,10 @@ class Harmonia
       Harmonia::Mail::VatReturn.required?
     when :annual_return
       Harmonia::Mail::AnnualReturn.required?
+    when :corporation_tax_payment
+      Harmonia::Mail::CorporationTaxPayment.required?
+    when :corporation_tax_submission
+      Harmonia::Mail::CorporationTaxSubmission.required?
     else
       true
     end

@@ -56,6 +56,54 @@ class HarmoniaTest < Test::Unit::TestCase
     assert Mail::TestMailer.deliveries.find { |m| m.subject =~ /it's your turn to pay us some monies.$/ }
   end
 
+  def test_sends_mail_to_annual_return_assignee_after_assignment
+    stub_free_agent_timeline!
+    Timecop.travel(Date.parse("2012-01-16")) do
+      @harmonia.assign(:annual_return)
+    end
+
+    assert Mail::TestMailer.deliveries.find { |m| m.subject =~ /is submitting the Annual Return this week.$/ }
+  end
+
+  def test_should_not_send_email_if_no_vat_return_is_due_soon
+    Harmonia::Mail::AnnualReturn.stubs(:required?).returns(false)
+    @harmonia.assign(:annual_return)
+
+    assert Mail::TestMailer.deliveries.empty?
+  end
+
+  def test_sends_mail_to_corp_tax_payment_assignee_after_assignment
+    stub_free_agent_timeline!
+    Timecop.travel(Date.parse("2012-10-22")) do
+      @harmonia.assign(:corporation_tax_payment)
+    end
+
+    assert Mail::TestMailer.deliveries.find { |m| m.subject =~ /is paying our Corporation Tax this week.$/ }
+  end
+
+  def test_should_not_send_email_if_no_corp_tax_payment_is_due_soon
+    Harmonia::Mail::CorporationTaxPayment.stubs(:required?).returns(false)
+    @harmonia.assign(:corporation_tax_payment)
+
+    assert Mail::TestMailer.deliveries.empty?
+  end
+
+  def test_sends_mail_to_corp_tax_payment_assignee_after_assignment
+    stub_free_agent_timeline!
+    Timecop.travel(Date.parse("2012-01-23")) do
+      @harmonia.assign(:corporation_tax_submission)
+    end
+
+    assert Mail::TestMailer.deliveries.find { |m| m.subject =~ /is submitting our Corporation Tax liability this week.$/ }
+  end
+
+  def test_should_not_send_email_if_no_corp_tax_payment_is_due_soon
+    Harmonia::Mail::CorporationTaxSubmission.stubs(:required?).returns(false)
+    @harmonia.assign(:corporation_tax_submission)
+
+    assert Mail::TestMailer.deliveries.empty?
+  end
+
   def test_raises_exception_if_task_is_unknown
     e = assert_raises(RuntimeError) { @harmonia.assign(:gobbledegook) }
     assert_equal "Task gobbledegook isn't known to harmonia", e.message
