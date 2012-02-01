@@ -15,20 +15,26 @@ class Harmonia
     @administrator = Harmonia::Administrator.new(people, Harmonia::Assignments.new(store_path))
   end
 
-  def assign(task)
-    if task_required?(task)
-      assignee = @administrator.assign(task)
-      dispatch_mail_for_task(task, assignee)
+  def assign(*tasks)
+    tasks.each do |task|
+      if task_required?(task)
+        assignee = @administrator.assign(task)
+        dispatch_mail_for_task(task, assignee)
+      end
     end
   end
 
-  def remind(task)
-    assignee = @administrator.assignee(task)
-    dispatch_reminder_mail_for_task(task, assignee)
+  def remind(*tasks)
+    tasks.each do |task|
+      assignee = @administrator.assignee(task)
+      dispatch_reminder_mail_for_task(task, assignee)
+    end
   end
 
-  def unassign(task)
-    @administrator.unassign(task)
+  def unassign(*tasks)
+    tasks.each do |task|
+      @administrator.unassign(task)
+    end
   end
 
   private
