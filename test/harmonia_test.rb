@@ -1,4 +1,5 @@
 require "test_helper"
+require "bigdecimal"
 
 class HarmoniaTest < Test::Unit::TestCase
   def setup
@@ -8,8 +9,8 @@ class HarmoniaTest < Test::Unit::TestCase
   end
 
   def test_sends_mail_to_invoices_assignee_after_assignment
-    overdue_invoice = stub("invoice", :status => "Overdue", :reference => "WEM-001", :net_value => BigDecimal.new(100), :due_on => "2012-02-26 00:00:00 UTC", :url => "http://example.com/invoice/WEM-001")
-    overdue_bill = stub("bill", :status => "Overdue", :reference => "FOO-999", :total_value => BigDecimal.new(50), :due_date => "2012-02-27 00:00:00 UTC")
+    overdue_invoice = stub("invoice", :status => "Overdue", :reference => "WEM-001", :net_value => BigDecimal.new("100.00"), :due_on => "2012-02-26 00:00:00 UTC", :url => "http://example.com/invoice/WEM-001")
+    overdue_bill = stub("bill", :status => "Overdue", :reference => "FOO-999", :total_value => BigDecimal.new("49.99"), :due_date => "2012-02-27 00:00:00 UTC")
     stub_free_agent!([overdue_invoice], [overdue_bill])
     @harmonia.assign(:invoices)
 
