@@ -109,3 +109,36 @@ class HarmoniaTest < Test::Unit::TestCase
     assert_equal "Task gobbledegook isn't known to harmonia", e.message
   end
 end
+
+class HarmoniaWithMockAdministratorTest < Test::Unit::TestCase
+  def setup
+    @administrator = mock("administrator")
+    Harmonia::Administrator.stubs(:new).returns(@administrator)
+    @harmonia = Harmonia.new(store_path)
+  end
+
+  def test_can_assign_multiple_tasks
+    @administrator.expects(:assign).with(:weeknotes).returns("Julian")
+    @harmonia.expects(:dispatch_mail_for_task).with(:weeknotes, "Julian")
+    @administrator.expects(:assign).with(:fire_logbook).returns("Anne")
+    @harmonia.expects(:dispatch_mail_for_task).with(:fire_logbook, "Anne")
+
+    @harmonia.assign(:weeknotes, :fire_logbook)
+  end
+
+  def test_can_remind_multiple_tasks
+    @administrator.expects(:assignee).with(:weeknotes).returns("Dick")
+    @harmonia.expects(:dispatch_reminder_mail_for_task).with(:weeknotes, "Dick")
+    @administrator.expects(:assignee).with(:fire_logbook).returns("George")
+    @harmonia.expects(:dispatch_reminder_mail_for_task).with(:fire_logbook, "George")
+
+    @harmonia.remind(:weeknotes, :fire_logbook)
+  end
+
+  def test_can_unassign_multiple_tasks
+    @administrator.expects(:unassign).with(:weeknotes)
+    @administrator.expects(:unassign).with(:fire_logbook)
+
+    @harmonia.unassign(:weeknotes, :fire_logbook)
+  end
+end

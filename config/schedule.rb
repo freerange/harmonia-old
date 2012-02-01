@@ -2,38 +2,25 @@ set :ruby, `which ruby`.strip
 set :path, File.expand_path("..", __FILE__)
 
 harmonia_run = %{cd :path && bundle exec :ruby -I:path/lib -rharmonia -e}
-job_type :assign,   %{#{harmonia_run} "Harmonia.new.assign(::task)"}
-job_type :unassign, %{#{harmonia_run} "Harmonia.new.unassign(::task)"}
-job_type :remind,   %{#{harmonia_run} "Harmonia.new.remind(::task)"}
+
+job_type :harmonia, %{#{harmonia_run} "Harmonia.new.:task(*:tasks)"}
 
 every :monday, :at => "11.59am" do
-  unassign :invoices
-  unassign :weeknotes
-  unassign :fire_logbook
-  unassign :wages
-  unassign :vat_return
-  unassign :annual_return
-  unassign :corporation_tax_payment
-  unassign :corporation_tax_submission
+  harmonia :unassign, tasks: [:invoices, :weeknotes, :fire_logbook, :wages, :vat_return, :annual_return, :corporation_tax_payment, :corporation_tax_submission]
 end
 
 every :monday, :at => "12:00pm" do
-  assign :invoices
-  assign :weeknotes
-  assign :vat_return
-  assign :annual_return
-  assign :corporation_tax_payment
-  assign :corporation_tax_submission
+  harmonia :assign, tasks: [:invoices, :weeknotes, :vat_return, :annual_return, :corporation_tax_payment, :corporation_tax_submission]
 end
 
 every :thursday, :at => "10.00am" do
-  assign :fire_logbook
+  harmonia :assign, tasks: [:fire_logbook]
 end
 
 every :thursday, :at => "12:00pm" do
-  remind :weeknotes
+  harmonia :remind, tasks: [:weeknotes]
 end
 
 every "0 12 25 * *" do
-  assign :wages
+  harmonia :assign, tasks: [:wages]
 end
