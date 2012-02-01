@@ -50,6 +50,10 @@ Woohoo, it looks like we're up-to-date on the outstanding invoice front.  There 
 
 You'll need to scan any invoices received over the last week and put them in dropbox.  You'll also need to create a Bill in FreeAgent representing the invoice and, finally, pay any bills that are due within the next week.
 
+<% overdue_bills.each_with_index do |bill, index| %>
+  * '<%= bill.reference %>' for GBP<%= "%0.2f" % bill.total_value %> was due on <%= bill.due_date.to_date.to_s(:rfc822) %>"
+<% end %>
+
 All the best,
 
 Chaos Administrator
