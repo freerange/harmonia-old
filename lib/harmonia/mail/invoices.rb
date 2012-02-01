@@ -19,7 +19,6 @@ class Harmonia
       private
 
       def overdue_invoices
-        return []
         domain = ENV["FREEAGENT_DOMAIN"]
         email = ENV["FREEAGENT_EMAIL"]
         password = ENV["FREEAGENT_PASSWORD"]
