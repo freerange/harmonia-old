@@ -25,6 +25,14 @@ class Harmonia
         freerange = FreeAgent::Company.new(domain, email, password)
         @overdue_invoices ||= freerange.invoices.select { |i| i.status == "Overdue" }
       end
+
+      def overdue_bills
+        domain = ENV["FREEAGENT_DOMAIN"]
+        email = ENV["FREEAGENT_EMAIL"]
+        password = ENV["FREEAGENT_PASSWORD"]
+        freerange = FreeAgent::Company.new(domain, email, password)
+        @overdue_bills ||= freerange.bills.select { |i| i.status == "Overdue" }
+      end
     end
   end
 end

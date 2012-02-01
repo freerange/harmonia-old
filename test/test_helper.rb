@@ -17,9 +17,9 @@ class Test::Unit::TestCase
     File.join(tmp_dir, "harmonia.yml")
   end
 
-  def stub_free_agent!(invoices)
+  def stub_free_agent!(invoices, bills)
     Harmonia::Mail::Invoices.any_instance.stubs(:free_agent_config).returns({})
-    FreeAgent::Company.stubs(:new).returns(stub('company', :invoices => invoices))
+    FreeAgent::Company.stubs(:new).returns(stub('company', :invoices => invoices, :bills => bills))
   end
 
   def stub_free_agent_timeline!
