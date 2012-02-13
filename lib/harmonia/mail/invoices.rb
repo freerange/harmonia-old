@@ -31,7 +31,7 @@ class Harmonia
         email = ENV["FREEAGENT_EMAIL"]
         password = ENV["FREEAGENT_PASSWORD"]
         freerange = FreeAgent::Company.new(domain, email, password)
-        @overdue_bills ||= freerange.bills.select { |i| i.status == "Overdue" }
+        @overdue_bills ||= freerange.bills(from: 60.days.ago, to: Date.today).select { |i| i.status == "Overdue" }
       end
     end
   end
