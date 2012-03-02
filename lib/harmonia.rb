@@ -11,7 +11,7 @@ class Harmonia
   autoload :Assignments, "harmonia/assignments"
 
   def initialize(store_path=File.expand_path("../../config/assignments.yml", __FILE__))
-    people = ["James A", "James M", "Tom", "Jase", "Chris"]
+    people = ["James A", "James M", "Tom", "Chris"]
     @administrator = Harmonia::Administrator.new(people, Harmonia::Assignments.new(store_path))
   end
 
