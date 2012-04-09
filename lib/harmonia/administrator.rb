@@ -35,7 +35,9 @@ class Harmonia
         h
       end
 
-      @people.select { |person| task_counts[person] == task_counts.values.min }.shuffle.first
+      available_people = @people.select { |person| task_counts[person] == task_counts.values.min }
+      puts %{Task: #{task}; Available people: #{available_people.join(", ")}}
+      available_people.shuffle.first
     end
 
     def assigned_tasks_ignoring(task, person)
