@@ -1,3 +1,4 @@
+.bundle
 config/free_agent.yml
 log/*
 config/assignments.yml
