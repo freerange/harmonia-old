@@ -38,7 +38,10 @@ class Harmonia
 
     def mail(&block)
       mail = ::Mail.new(&block)
-      mail.reply_to = ENV["REPLY_TO"] || "everyone@gofreerange.com"
+      mail.charset = "UTF-8"
+      mail.reply_to ENV["REPLY_TO"] || "everyone@gofreerange.com"
+      mail.to ENV["TO"] || "everyone@gofreerange.com"
+      mail.from ENV["FROM"] || '"Chaos Administrator" <chaos@gofreerange.com>'
       mail
     end
 

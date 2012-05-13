@@ -16,9 +16,6 @@ class Harmonia
         due_return = self.class.timeline.upcoming_corporation_tax_submissions.first
         email_body = render_email('corporation_tax_submission', binding)
         mail do
-          self.charset = "UTF-8"
-             from '"Chaos Administrator" <chaos@gofreerange.com>'
-               to ENV["TO"] || 'lets@gofreerange.com'
           subject "#{selected_person} is submitting our Corporation Tax liability this week."
              body email_body
         end

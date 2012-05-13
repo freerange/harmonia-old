@@ -8,9 +8,6 @@ class Harmonia
         selected_person = @assignee
         email_body = render_email('invoices', binding)
         mail do
-          self.charset = "UTF-8"
-             from '"Chaos Administrator" <chaos@gofreerange.com>'
-               to ENV["TO"] || 'lets@gofreerange.com'
           subject "#{selected_person}, it's your turn to do invoices."
              body email_body
         end

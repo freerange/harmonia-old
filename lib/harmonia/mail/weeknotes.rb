@@ -7,9 +7,6 @@ class Harmonia
         selected_person = @assignee
         email_body = render_email('weeknotes', binding)
         mail do
-          self.charset = "UTF-8"
-             from '"Chaos Administrator" <chaos@gofreerange.com>'
-               to ENV["TO"] || 'lets@gofreerange.com'
           subject "#{selected_person} is writing the notes this week."
              body email_body
         end
@@ -19,9 +16,6 @@ class Harmonia
         selected_person = @assignee
         email_body = render_email('weeknotes', binding)
         m = mail do
-          self.charset = "UTF-8"
-             from '"Chaos Administrator" <chaos@gofreerange.com>'
-               to ENV["TO"] || 'lets@gofreerange.com'
           subject "#{selected_person}, don't forget the weeknotes."
              body email_body
         end
