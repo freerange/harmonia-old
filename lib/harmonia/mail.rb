@@ -36,6 +36,12 @@ class Harmonia
       @assignee = person
     end
 
+    def mail(&block)
+      mail = ::Mail.new(&block)
+      mail.reply_to = ENV["REPLY_TO"] || "everyone@gofreerange.com"
+      mail
+    end
+
     def send
       to_mail.deliver
     end

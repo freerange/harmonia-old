@@ -15,12 +15,12 @@ class Harmonia
         selected_person = @assignee
         due_return = self.class.timeline.upcoming_vat_returns.first
         email_body = render_email('vat_return', binding)
-        mail = ::Mail.new do
-        self.charset = "UTF-8"
-           from '"Chaos Administrator" <chaos@gofreerange.com>'
-             to ENV["TO"] || 'lets@gofreerange.com'
-        subject "#{selected_person} is submitting the VAT return this week."
-           body email_body
+        mail do
+          self.charset = "UTF-8"
+             from '"Chaos Administrator" <chaos@gofreerange.com>'
+               to ENV["TO"] || 'lets@gofreerange.com'
+          subject "#{selected_person} is submitting the VAT return this week."
+             body email_body
         end
       end
     end
