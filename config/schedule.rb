@@ -13,6 +13,10 @@ every :monday, :at => "12:00pm" do
   harmonia :assign, tasks: [:invoices, :weeknotes, :vat_return, :annual_return, :corporation_tax_payment, :corporation_tax_submission]
 end
 
+every :wednesday, :at => "12:00pm" do
+  harmonia :assign, tasks: [:gardener]
+end
+
 every :thursday, :at => "10.00am" do
   harmonia :assign, tasks: [:fire_logbook]
 end
