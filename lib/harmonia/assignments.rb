@@ -5,7 +5,7 @@ class Harmonia
     def initialize(path)
       @assignments_path = path
       @assignments = if File.exist?(@assignments_path)
-        YAML.load_file(path)
+        YAML.load_file(path) rescue {}
       else
         {}
       end
