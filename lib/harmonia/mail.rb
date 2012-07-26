@@ -26,6 +26,7 @@ class Harmonia
     autoload :CorporationTaxPayment, "harmonia/mail/corporation_tax_payment"
     autoload :CorporationTaxSubmission, "harmonia/mail/corporation_tax_submission"
     autoload :Gardener, "harmonia/mail/gardener"
+    autoload :Drinks, "harmonia/mail/drinks"
 
     def self.build(task, *args)
       klass = task.to_s.split("_").map(&:capitalize).join

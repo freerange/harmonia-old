@@ -28,3 +28,7 @@ end
 every "0 12 25 * *" do
   harmonia :assign, tasks: [:wages]
 end
+
+every "0 12 1 * *" do
+  harmonia :assign, tasks: [:drinks]
+end

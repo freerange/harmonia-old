@@ -113,6 +113,12 @@ class HarmoniaTest < Test::Unit::TestCase
     assert Mail::TestMailer.deliveries.find { |m| m.subject =~ /it's your turn to water the plants.$/ }
   end
 
+  def test_sends_mail_to_drinks_assignee_after_assignment
+    @harmonia.assign(:drinks)
+
+    assert Mail::TestMailer.deliveries.find { |m| m.subject =~ /it's your turn to organise drinks.$/ }
+  end
+
   def test_raises_exception_if_task_is_unknown
     e = assert_raises(RuntimeError) { @harmonia.assign(:gobbledegook) }
     assert_equal "Task gobbledegook isn't known to harmonia", e.message
