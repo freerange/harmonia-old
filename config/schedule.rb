@@ -6,7 +6,7 @@ harmonia_run = %{cd :path && bundle exec :ruby -I:path/lib -rharmonia -e}
 job_type :harmonia, %{#{harmonia_run} "Harmonia.new.:task(*:tasks)"}
 
 every :monday, :at => "11.50am" do
-  harmonia :unassign, tasks: [:annual_return, :invoices, :weeknotes, :vat_return, :corporation_tax_payment, :corporation_tax_submission, :fire_logbook, :wages]
+  harmonia :unassign, tasks: [:annual_return, :invoices, :weeknotes, :vat_return, :corporation_tax_payment, :corporation_tax_submission, :gardener, :fire_logbook, :wages, :drinks]
 end
 
 every :monday, :at => "12:00pm" do
