@@ -7,7 +7,7 @@ gem "ri_cal"
 gem "rake"
 
 group :development do
-  gem "recap", :git => "git://github.com/freerange/recap.git"
+  gem "recap"
 end
 
 group :test do
