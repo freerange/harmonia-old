@@ -24,7 +24,7 @@ For info only, the assignee of this 'task' is #{selected_person}.
 
 * From your development machine, run `cap whenever:update_crontab`.
 
-* Finally, as the Harmonia user on the server remove any assignment for this task by running `cd /home/harmonia/app && ruby -Ilib -rharmonia -e "Harmonia.new.unassign(:harmonia_test)`.
+* Finally, as the Harmonia user on the server remove any assignment for this task by running `cd /home/harmonia/app && ruby -Ilib -rharmonia -e "Harmonia.new.unassign(:harmonia_test)"`.
               EOF
         end
       end
