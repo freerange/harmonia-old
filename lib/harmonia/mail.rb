@@ -28,6 +28,7 @@ class Harmonia
     autoload :Gardener, "harmonia/mail/gardener"
     autoload :Drinks, "harmonia/mail/drinks"
     autoload :HarmoniaTest, "harmonia/mail/harmonia_test"
+    autoload :Paye, "harmonia/mail/paye"
 
     def self.build(task, *args)
       klass = task.to_s.split("_").map(&:capitalize).join

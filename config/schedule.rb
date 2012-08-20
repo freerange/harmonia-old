@@ -12,7 +12,7 @@ job_type :harmonia, %{#{harmonia_run} "Harmonia.new.:task(*:tasks)"}
 # end
 
 every :monday, :at => "11.50am" do
-  harmonia :unassign, tasks: [:annual_return, :invoices, :weeknotes, :vat_return, :corporation_tax_payment, :corporation_tax_submission, :gardener, :fire_logbook, :wages, :drinks]
+  harmonia :unassign, tasks: [:annual_return, :invoices, :weeknotes, :vat_return, :corporation_tax_payment, :corporation_tax_submission, :gardener, :fire_logbook, :wages, :drinks, :paye]
 end
 
 every :monday, :at => "12:00pm" do
@@ -39,4 +39,9 @@ end
 # Midday on the 1st of every month
 every "0 12 1 * *" do
   harmonia :assign, tasks: [:drinks]
+end
+
+# Midday on the 6th of January, April, July and October
+every "0 12 6 1,4,7,10 *" do
+  harmonia :assign, tasks: [:paye]
 end
