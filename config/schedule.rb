@@ -25,10 +25,12 @@ every :thursday, :at => "12:00pm" do
   harmonia :remind, tasks: [:weeknotes]
 end
 
+# Midday on the 25th of every month
 every "0 12 25 * *" do
   harmonia :assign, tasks: [:wages]
 end
 
+# Midday on the 1st of every month
 every "0 12 1 * *" do
   harmonia :assign, tasks: [:drinks]
 end
