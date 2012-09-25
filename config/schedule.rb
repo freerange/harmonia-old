@@ -16,29 +16,7 @@ every :monday, :at => "11.50am" do
 end
 
 every :monday, :at => "12:00pm" do
-  harmonia :assign, tasks: [:annual_return, :invoices, :weeknotes, :vat_return, :corporation_tax_payment, :corporation_tax_submission]
-end
-
-every :wednesday, :at => "12:00pm" do
-  harmonia :assign, tasks: [:gardener]
-end
-
-every :thursday, :at => "10.00am" do
-  harmonia :assign, tasks: [:fire_logbook]
-end
-
-every :thursday, :at => "12:00pm" do
-  harmonia :remind, tasks: [:weeknotes]
-end
-
-# Midday on the 25th of every month
-every "0 12 25 * *" do
-  harmonia :assign, tasks: [:wages]
-end
-
-# Midday on the 1st of every month
-every "0 12 1 * *" do
-  harmonia :assign, tasks: [:drinks]
+  harmonia :assign, tasks: [:annual_return, :vat_return, :corporation_tax_payment, :corporation_tax_submission]
 end
 
 # Midday on the 6th of January, April, July and October
