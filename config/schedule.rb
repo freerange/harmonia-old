@@ -18,8 +18,3 @@ end
 every :monday, :at => "12:00pm" do
   harmonia :assign, tasks: [:annual_return, :vat_return, :corporation_tax_payment, :corporation_tax_submission]
 end
-
-# Midday on the 6th of January, April, July and October
-every "0 12 6 1,4,7,10 *" do
-  harmonia :assign, tasks: [:paye]
-end
