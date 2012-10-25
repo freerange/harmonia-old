@@ -16,5 +16,5 @@ every :monday, :at => "11.50am" do
 end
 
 every :monday, :at => "12:00pm" do
-  harmonia :assign, tasks: [:annual_return, :vat_return, :corporation_tax_payment, :corporation_tax_submission]
+  harmonia :assign, tasks: [:annual_return, :vat_return, :corporation_tax_submission]
 end
